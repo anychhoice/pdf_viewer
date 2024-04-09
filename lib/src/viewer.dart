@@ -21,6 +21,7 @@ class PDFViewer extends StatefulWidget {
   final double? minScale;
   final double? maxScale;
   final double? panLimit;
+  final Widget loadingWidget;
 
   final Widget Function(
     BuildContext,
@@ -48,6 +49,7 @@ class PDFViewer extends StatefulWidget {
       this.zoomSteps,
       this.minScale,
       this.maxScale,
+      this.loadingWidget = const CircularProgressIndicator(),
       this.panLimit})
       : super(key: key);
 
@@ -218,7 +220,7 @@ class _PDFViewerState extends State<PDFViewer> {
             itemCount: _pages?.length ?? 0,
             itemBuilder: (context, index) => _pages![index] == null
                 ? Center(
-                    child: CircularProgressIndicator(),
+                    child: widget.loadingWidget,
                   )
                 : _pages![index]!,
           ),

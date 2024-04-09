@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:advance_pdf_viewer_fork/advance_pdf_viewer_fork.dart';
 
@@ -20,7 +19,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   bool _isLoading = true;
-  PDFDocument document;
+  PDFDocument? document;
   bool _usePDFListView = false;
 
   @override
@@ -31,7 +30,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   void dispose() {
-    document.clearImageCache();
+    document?.clearImageCache();
     document = null;
     super.dispose();
   }
@@ -107,7 +106,7 @@ class _MyAppState extends State<MyApp> {
                 child: _isLoading
                     ? Center(child: CircularProgressIndicator())
                     : PDFViewer(
-                        document: document,
+                        document: document!,
                         zoomSteps: 1,
                         //uncomment below line to preload all pages
                         // lazyLoad: false,
@@ -157,7 +156,7 @@ class _MyAppState extends State<MyApp> {
               child: _isLoading 
                 ? Center(child: CircularProgressIndicator(),)
                 : PDFListViewer(
-                    document: document,
+                    document: document!,
                     preload: true,
                   ),
             ),
