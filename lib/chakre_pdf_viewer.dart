@@ -1,4 +1,4 @@
-library advance_pdf_viewer_fork;
+library chakre_pdf_viewer;
 
 export 'src/document.dart' show PDFDocument;
 export 'src/page.dart' show PDFPage;

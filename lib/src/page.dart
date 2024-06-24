@@ -1,8 +1,7 @@
 import 'dart:io';
-import 'dart:ui';
-import 'package:advance_pdf_viewer_fork/src/zoom.dart';
+
+import 'package:chakre_pdf_viewer/src/zoom.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter/painting.dart';
 
 class PDFPage extends StatefulWidget {
   final String? imgPath;
@@ -49,10 +48,11 @@ class _PDFPageState extends State<PDFPage> {
   _isRepainting() => _repainting;
 
   _repaint() async {
-    if(_repainting) await Future.doWhile(() => _isRepainting());
+    if (_repainting) await Future.doWhile(() => _isRepainting());
     _repainting = true;
-    if(_resolver != null && _listener != null) _resolver!.removeListener(_listener!);
-    if(provider != null) provider!.evict();
+    if (_resolver != null && _listener != null)
+      _resolver!.removeListener(_listener!);
+    if (provider != null) provider!.evict();
     provider = FileImage(File(widget.imgPath!), scale: widget.maxScale ?? 1.0);
     _resolver = provider!.resolve(createLocalImageConfiguration(context));
     _listener = ImageStreamListener((imgInfo, alreadyPainted) {
@@ -64,7 +64,7 @@ class _PDFPageState extends State<PDFPage> {
 
   @override
   void dispose() {
-    if(_resolver != null && _listener != null) {
+    if (_resolver != null && _listener != null) {
       _resolver!.removeListener(_listener!);
     }
     provider!.evict();
@@ -74,16 +74,15 @@ class _PDFPageState extends State<PDFPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: null,
-      child: CustomZoomableWidget(
-        onZoomChanged: widget.onZoomChanged,
-        zoomSteps: widget.zoomSteps ?? 3,
-        minScale: widget.minScale ?? 1.0,
-        panLimit: widget.panLimit ?? 1.0,
-        maxScale: widget.maxScale ?? 5.0,
-        autoCenter: true,
-        child: Image(image: provider!),
-      )
-    );
+        decoration: null,
+        child: CustomZoomableWidget(
+          onZoomChanged: widget.onZoomChanged,
+          zoomSteps: widget.zoomSteps ?? 3,
+          minScale: widget.minScale ?? 1.0,
+          panLimit: widget.panLimit ?? 1.0,
+          maxScale: widget.maxScale ?? 5.0,
+          autoCenter: true,
+          child: Image(image: provider!),
+        ));
   }
 }
